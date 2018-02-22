@@ -1,0 +1,15 @@
+{
+  "name": "santiagogg/mvc-framework",
+  "description": "light-weight MVC framework.",
+  "type": "project",
+  "require": {
+    "league/route": "^3.0",
+    "zendframework/zend-diactoros": "^1.7"
+  },
+  "authors": [
+    {
+      "name": "santiagogg",
+      "email": "santiagogg@gmail.com"
+    }
+  ]
+}
