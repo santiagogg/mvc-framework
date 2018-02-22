@@ -6,6 +6,11 @@
     "league/route": "^3.0",
     "zendframework/zend-diactoros": "^1.7"
   },
+  "autoload": {
+    "psr-4": {
+      "Controllers\\": "app/controllers/"
+    }
+  },
   "authors": [
     {
       "name": "santiagogg",
