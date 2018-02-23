@@ -110,8 +110,7 @@ p {
     }
 
     .media .footer {
-        background-color: #eee;
-        padding: 10px;
+        padding: 10px 0;
     }
 
 
@@ -147,6 +146,16 @@ p {
 
 
 }
+button.vote {
+    background: #000;
+    color: #fff;
+    padding: .8em;
+    border: none;
+    font-weight: bold;
+    margin-top: 1em;
+    cursor: pointer;
+}
+
 .small{
     padding-top: .8em;
     font-size: .8em;

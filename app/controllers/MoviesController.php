@@ -21,4 +21,26 @@ class MoviesController extends BaseController
         
         return $this->view($response, 'movies/index.twig', ['movies' => $movies->onShow()]);
     }
+    
+    public function vote(ServerRequestInterface $request, ResponseInterface $response, array $args) {
+        
+        $movieId = $args['id'];
+        //TODO:persist data in db
+        $vote = [
+            'movie_id' => $movieId,
+            'voted_at' => date('Y-m-d H:i:s')
+        ];
+        
+        
+        //TODO:get the total votes from db
+        $movieUpdated = [
+            'movie_id'    => $movieId,
+            'last_voted'  => $vote['voted_at'],
+            'total_votes' => 1
+        ];
+        
+        $response->getBody()->write(json_encode($movieUpdated));
+        
+        return $response->withStatus(200);
+    }
 }

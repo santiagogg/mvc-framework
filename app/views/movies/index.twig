@@ -10,7 +10,7 @@
 
 {% endblock %}{% block content %}
   {% for movie in movies %}
-    <div class="media">
+    <div class="media" id="movie{{ movie.id }}">
 
       <div class="img">
         <img src="{{ movie.img_src }}" alt="Placeholder">
@@ -18,11 +18,30 @@
       <h2 class="title">{{ movie.title }}</h2>
       <div class="content">
         <p>{{ movie.overview }}</p>
-        <p class="small">release on: {{ movie.release_date }}</p>
+        <p class="small">Release on: {{ movie.release_date }}</p>
+        <p class="small">
+          Total Votes: <span class="total-votes">{{ movie.total_votes }} </span> -
+          Last Voted: <span class="last-voted">{{ movie.last_voted }} </span>
+        </p>
       </div>
-      <div class="footer">
-        <a href="movies/{{ movie.id }}/vote"> Vote for this Movie</a>
+      <div class="footer small">
+        <button class="vote" data-id="{{ movie.id }}"> Vote for this Movie</button>
       </div>
     </div>
   {% endfor %}
+{% endblock %}
+
+{% block scripts %}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $("button.vote").click(function () {
+        var id = $(this).data('id');
+        $.post("/movies/" + id + "/vote", (function (data) {
+          $('#movie' + data.movie_id + ' .total-votes').text(data.total_votes);
+          $('#movie' + data.movie_id + ' .last-voted').text(data.last_voted);
+        }), 'json');
+      });
+    });
+  </script>
 {% endblock %}

@@ -27,14 +27,18 @@ class Movies
         
         $movies = array_map(function($movie) {
             return [
-                'id'          => $movie['id'],
-                'title'       => $movie['title'],
-                'img_src' => 'https://image.tmdb.org/t/p/w500/'.$movie['poster_path'],
-                'overview'    => $movie['overview'],
-                'release_date'    => $movie['release_date'],
+                'id'           => $movie['id'],
+                'title'        => $movie['title'],
+                'img_src'      => 'https://image.tmdb.org/t/p/w500' . $movie['poster_path'],
+                'overview'     => $movie['overview'],
+                'release_date' => $movie['release_date'],
+                //TODO: this has to be obtain from the votes table in DB
+                'total_votes'        => 0,
+                'last_voted'   => 'never'
             
             ];
         }, json_decode($body, true)['results']);
+        
         return $movies;
     }
 }
