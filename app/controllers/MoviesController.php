@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * Created by PhpStorm.
  * User: santiagogg
@@ -13,12 +12,12 @@ namespace Controllers;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class MoviesController
+class MoviesController extends BaseController
 {
-    public function index(ServerRequestInterface $request, ResponseInterface $response)
-    {
-        $response->getBody()->write('<h1>Movie Index</h1>');
-    
-        return $response;
+    public function index(ServerRequestInterface $request, ResponseInterface $response) {
+        $body = $response->getBody();
+        $body->write($this->view->render('movies/index.twig', ['title' => 'Index of Movies']));
+        
+        return $response->withBody($body);
     }
 }
