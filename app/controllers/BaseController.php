@@ -22,4 +22,11 @@ class BaseController
     public function __construct(Twig_Environment $view) {
         $this->view = $view;
     }
+    
+    public function view($response, $view, $data) {
+        $body = $response->getBody();
+        $body->write($this->view->render($view, $data));
+        
+        return $response->withBody($body);
+    }
 }

@@ -3,7 +3,7 @@
 // Load our autoloader
 require_once __DIR__.'/vendor/autoload.php';
 
-//
+// Use Dotenv to load environment variables from .env file
 $dotenv = new Dotenv\Dotenv(__DIR__);
 $dotenv->load();
 
@@ -19,8 +19,6 @@ $container->share('request', function () {
 
 $container->share('emitter', Zend\Diactoros\Response\SapiEmitter::class);
 
-
-//
 $container->share('Twig', function () {
     // Specify our Twig templates location
     $twigLoader = new Twig_Loader_Filesystem(__DIR__.'/app/views');
@@ -29,7 +27,6 @@ $container->share('Twig', function () {
 });
 
 //Inject dependencies to controller
-
 $container->add(\Controllers\MoviesController::class)
     ->withArgument($container->get('Twig'));
 

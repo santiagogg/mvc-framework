@@ -1,13 +1,28 @@
 {% extends "layouts/default.twig" %}
-
-{% block title %}
-  <h1>Index of Movies</h1>
-{% endblock %}
+{% set title = 'this week movies released' %}
 
 
 
-{% block content %}
-  <p class="important">
-    Welcome to the index of Movies.
+{% block sidenav %}
+  <p>
+    Vote for the movie you would like to see with your friends this week.
   </p>
+
+{% endblock %}{% block content %}
+  {% for movie in movies %}
+    <div class="media">
+
+      <div class="img">
+        <img src="{{ movie.img_src }}" alt="Placeholder">
+      </div>
+      <h2 class="title">{{ movie.title }}</h2>
+      <div class="content">
+        <p>{{ movie.overview }}</p>
+        <p class="small">release on: {{ movie.release_date }}</p>
+      </div>
+      <div class="footer">
+        <a href="movies/{{ movie.id }}/vote"> Vote for this Movie</a>
+      </div>
+    </div>
+  {% endfor %}
 {% endblock %}

@@ -9,15 +9,16 @@
 
 namespace Controllers;
 
+use Models\Movies;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 class MoviesController extends BaseController
 {
     public function index(ServerRequestInterface $request, ResponseInterface $response) {
-        $body = $response->getBody();
-        $body->write($this->view->render('movies/index.twig', ['title' => 'Index of Movies']));
         
-        return $response->withBody($body);
+        $movies = new Movies();
+        
+        return $this->view($response, 'movies/index.twig', ['movies' => $movies->onShow()]);
     }
 }
