@@ -31,32 +31,16 @@ class MoviesController extends BaseController
     }
     
     public function index(ServerRequestInterface $request, ResponseInterface $response) {
-        $movies = new Movies();
-        return $this->view($response, 'movies/index.twig', ['movies' => $movies->onShow()]);
+        $movies = new Movies($this->conn);
+        
+        return $this->view($response, 'movies/index.twig', ['movies' => $movies->getMoviesOnShowWithVotes()]);
     }
     
     public function vote(ServerRequestInterface $request, ResponseInterface $response, array $args) {
-        
         $movieId = $args['id'];
-        $time_stamp = date('Y-m-d H:i:s');
-        
-        //persist data in db
-        $sql = "INSERT INTO votes (movie_id, voted_at) VALUES (:movie_id, :voted_at)";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute([
-            ':movie_id' => $movieId,
-            ':voted_at' => $time_stamp
-        ]);
-        
-        //get the total_votes / last_votes from db
-        $sql = "select movie_id, count(*) total_votes, MAX(voted_at) last_voted from votes where movie_id = :movie_id group by movie_id";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute([
-            ':movie_id' => $movieId
-        ]);
-        $movieUpdated = $stmt->fetch();
-        
-        
+        $movies = new Movies($this->conn);
+        $movies->saveVote($movieId);
+        $movieUpdated = $movies->getVotesForMovie($movieId);
         $response->getBody()->write(json_encode($movieUpdated));
         
         return $response->withStatus(200);
